@@ -18,6 +18,11 @@ h3 {
 	font-family: 'Great Vibes', cursive;
 }
 
+.headline {
+	font-size: 200%;
+	font-family: 'Mina', cursive;
+}
+
 .player-one {
 	align-items: center;
 	text-align: center;
@@ -54,9 +59,11 @@ img:hover {
 	border: 5px double black;
 	border-radius: 10px;
 	background-image: url("images/parchment.jpg");
+	background-size: cover;
 }
 
 #chat-space {
+	margin: 10px 0 0 0;
 	background-color: #fff;
 	opacity: .7;
 	width: 100%;
