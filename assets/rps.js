@@ -10,17 +10,25 @@
   firebase.initializeApp(config);
 
   var database = firebase.database();
-  var loggedOn = database.ref("loggedOn");
   var chatbox = {
       name: " ",
       text: " "
   };
+
+  var currentPlayer;
+
+  var player = {
+      player1stat: false,
+      player2stat: false
+  }
+
   var player1 = {
       name: " ",
       wins: 0,
       losses: 0,
       turn: false,
-      choice: " "
+      choice: " ",
+      chat: " "
   };
 
   var player2 = {
@@ -28,79 +36,137 @@
       wins: 0,
       losses: 0,
       turn: false,
-      choice: " "
+      choice: " ",
+      chat: " "
   };
+  /*
+        function data(data) {
+            console.log(data);
+            var playerCheck = data.val();
+            var playerCheckStats = Object.keys(playerCheck);
+            console.log(playerCheckStats);
+        }
 
-  // onclick function for submitting a name
-  $("button#submit-name").on("click", function() {
-      player1.name = $("#name-goes-here").val();
-      loggedOn = true;
-      if (loggedOn === true) {
-          database.ref().set({
-              player: player1
-          });
-      }
-      if (player1.name.length > 0) {
-          database.ref().child("player").set({
-              player1: true
-          });
-          database.ref().child("player1").set({
-          name: player1.name
-        });
-          $("#name-prompt").hide();
-          $(".headline").append("Hi, " + player1.name + "!  You are Player One!");
-          console.log(player1.name);
-      }
-
-      return false;
-  });
+        var fbPlayerStat2 = database.ref("player2stat");
+        fbPlayerStat2.on("value", data, error);
+        console.log(fbPlayerStat2);
 
 
-  var rockPOne = $("#p-one-rock");
-  var rockPTwo = $("#p-two-rock");
-  var paperPOne = $("#p-one-paper");
-  var paperPTwo = $("#p-two-paper");
-  var scissorsPOne = $("#p-one-scissors");
-  var scissorsPTwo = $("#p-two-scissors");
+        function error(err) {
+            console.log("error");
+            console.log(err);
+        } */
+  $("button#submit-name").on("click", function(data) {
+              $("#name-prompt").hide();
+              //    var fbPlayerStat = database.ref().child("player");
+              database.ref().on("value", function(snapshot) {
+                  console.log(snapshot.val().player2stat);
+                  switch (player) {
 
-      $(".selectors").on("click", function() {
-          player1.choice = (this.id);
-          if (player1.choice === rockPOne) {
-              $("#p-one-paper", "#p-one-scissors").hide();
-              database.update().child(player1.choice);
-              var choice = {
-                  choice: rock
-              };
-          } else if (player1.choice === paperPOne) {
-              $("#p-one-rock", "#p-one-scissors").hide();
-              database.update().child(player1.choice);
-              var choice = {
-                  choice: paper
-              };
-          } else if (player1.choice === scissorsPOne) {
-              $("#p-one-rock", "#p-one-paper").hide();
-              database.ref().update().child(player1.choice);
-              var choice = {
-                  choice: scissors
-              };
-          }
+                      case snapshot.child("player1").exists():
+                          player2.name = $("#name-goes-here").val();
+                          currentPlayer = player2.name;
+                          database.ref().child("player").set({
+                              player1stat: true,
+                              player2stat: true
+                          });
+                          database.ref().child("player2").set({
+                              name: player2.name
+                          });
+                          $(".headline").append("Hi, " + player2.name + "!  You are Player Two!");
+                          console.log(player2.name);
+                          break;
 
-      });
+                      case snapshot.child("player1").exists() && snapshot.child("player2").exists():
+                          return false;
+                          break;
+
+                      default:
+                          player1.name = $("#name-goes-here").val();
+                          player2.name = " ";
+                          currentPlayer = player1.name;
+                          player1stat = true;
+                          player2stat = false;
+
+                          database.ref().update({
+                              player: player1stat
+                          });
+                          database.ref().child("player").set({
+                              player1stat: true,
+                              player2stat: false
+                          });
+                          database.ref().child("player1").set({
+                              name: player1.name
+                          });
+
+                          $(".headline").append("Hi, " + player1.name + "!  You are Player One!");
+                          console.log(player1.name);
+                          break;
+
+                  }
+                  function err(errorObject) {
+                      console.log("Errors handled: " + errorObject.code);
+                  };
+              });
+
+
+              var rockPOne = $("#p-one-rock");
+              var rockPTwo = $("#p-two-rock");
+              var paperPOne = $("#p-one-paper");
+              var paperPTwo = $("#p-two-paper");
+              var scissorsPOne = $("#p-one-scissors");
+              var scissorsPTwo = $("#p-two-scissors");
+
+              $("img").on("click", function() {
+                  player1.choice = (this);
+                  console.log(this);
+                  if (player1.choice === $("#p-one-rock")) {
+                      $("#p-one-paper", "#p-one-scissors").hide();
+                      database.ref().update(player1.choice);
+                      var choice = {
+                          choice: rock
+                      };
+                  } else if (player1.choice === paperPOne) {
+                      $("#p-one-rock", "#p-one-scissors").hide();
+                      database.ref().update(player1.choice);
+                      var choice = {
+                          choice: paper
+                      };
+                  } else if (player1.choice === scissorsPOne) {
+                      $("#p-one-rock", "#p-one-paper").hide();
+                      database.ref().update(player1.choice);
+                      var choice = {
+                          choice: scissors
+                      };
+                  }
+
+              });
 
 
 
-    // chatbox function
-      $("#send-chat").on("click", function () {
-          var message = $("#message-input").val();
-          $("#message-input").val("");
-          var chatMessages = database.ref("chat");
-          var chat = database.ref().set({
-              message: message,
-              timestamp: firebase.database.ServerValue.TIMESTAMP,
-              sender: player1.name
-          });
-          chatMessages.push(message);
+              // chatbox function
+              var chatRef = database.ref().child("chat");
+              $("#send-chat").on("click", function() {
+                  var message = $("#message-input").val();
+                  $("#message-input").val("");
+                  var sender = player1.name;
+                  var chatMessages = database.ref().child("chat");
+                  var chat = database.ref().push({
+                      message: message,
+                      timestamp: firebase.database.ServerValue.TIMESTAMP,
+                      sender: player1.name
+                  });
+                  chatMessages.push(message);
+                  $("#chat-space").text(sender + ": " + message);
 
-          return false;
-      });
-  
+                  return false;
+
+
+                  chatRef.on('child_added', function(snapshot) {
+                      var newMessage = snapshot.val();
+                      $("<span/>").text(message).prepend($("<em/>").text(sender + ": ")).appendTo($('#chat-space'));
+
+
+                  });
+              });
+               });
