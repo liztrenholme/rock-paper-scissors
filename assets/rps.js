@@ -56,6 +56,11 @@
             console.log("error");
             console.log(err);
         } */
+
+
+
+// need to fix errors and figure out why player 1 and 2 names are repeating?
+// need to better understand how snapshot works on firebase and how to pull the data, because .val() only works sometimes
   $("button#submit-name").on("click", function(data) {
               $("#name-prompt").hide();
               //    var fbPlayerStat = database.ref().child("player");
@@ -109,7 +114,8 @@
                   };
               });
 
-
+// needs more functionality- images don't hide when they're supposed to
+// and selection isn't registered to firebase
               var rockPOne = $("#p-one-rock");
               var rockPTwo = $("#p-two-rock");
               var paperPOne = $("#p-one-paper");
@@ -143,7 +149,7 @@
               });
 
 
-
+// chat is currently one-sided. messages go to firebase, but don't come back
               // chatbox function
               var chatRef = database.ref().child("chat");
               $("#send-chat").on("click", function() {
