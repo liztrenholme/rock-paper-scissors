@@ -1,5 +1,10 @@
 body {
-	background-color: #DEF3FE; 
+	background-color: #DEF3FE;
+	background-image: url("images/gauge.png");
+	background-size: 40% 40%;
+	background-position: 100% 100%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 
 h1 {
@@ -18,9 +23,14 @@ h3 {
 	font-family: 'Great Vibes', cursive;
 }
 
+p {
+	font-size: 110%;
+	font-family: 'Great Vibes', cursive;
+}
+
 .headline {
 	font-size: 200%;
-	font-family: 'Mina', cursive;
+	font-family: 'Cabin Sketch', cursive;
 }
 
 .player-one {
@@ -51,7 +61,7 @@ h3 {
 }
 
 img:hover {
-	opacity: .8;
+	opacity: .7;
 }
 
 .chatbox {

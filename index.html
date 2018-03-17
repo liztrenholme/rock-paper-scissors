@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!-- Cool fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Mina|Rye" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin+Sketch|Great+Vibes|Mina|Rye" rel="stylesheet">
     <!-- stylesheet -->
     <link rel="stylesheet" type="text/css" href="assets/rps.css">
     <title>Rock, Paper, Scissors</title>
@@ -47,6 +47,8 @@
                         <img src="assets/images/scissors.png" width="85px" height="190px" id="p-one-scissors">
                     </div>
                     <div class="col-md info">
+                      <p id="player-one-wins">Wins: 0</p>
+                      <p id="player-one-losses">Losses: 0</p>
                     </div>
                 </div>
             </div>
@@ -54,6 +56,8 @@
                 <h3>Player Two</h3>
                 <div class="row">
                     <div class="col-md info">
+                      <p id="player-two-wins">Wins: 0</p>
+                      <p id="player-two-losses">Losses: 0</p>
                     </div>
                     <div class="col-md selectors">
                         <img src="assets/images/rock.png" width="130px" height="80px" id="p-two-rock">
@@ -73,9 +77,9 @@
               </div>
               <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
-                        <button type="button" class="btn btn-secondary btn-sm">Send</button>
+                        <button type="button" class="btn btn-secondary btn-sm" id="send-chat">Send</button>
                     </div>
-                    <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                    <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="message-input">
                 </div>
             </div>
             <div class="col-md-3"></div>
