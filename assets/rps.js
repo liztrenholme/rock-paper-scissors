@@ -63,21 +63,6 @@
   var scissorsPOne = $("#p-one-scissors");
   var scissorsPTwo = $("#p-two-scissors");
 
-
-  //database.ref().on("value", function(snapshot) {
-
-     // player1.choice = snapshot.child("Player1").child("choice").val();
-      //   player1.name = snapshot.child("Player1").child("name").val();
-      //    player1WinCount = snapshot.child("Player1").child("wins").val();
-      //    player1LossCount = snapshot.child("Player1").child("losses").val();
-
-    //  player2.choice = snapshot.child("Player2").child("choice").val();
-     // player2.name = snapshot.child("Player2").child("name").val();
-      //    player2WinCount = snapshot.child("Player2").child("wins").val();
-      //    player2LossCount = snapshot.child("Player2").child("losses").val();
-
-      //updateScoreDisplay();
-
       $(".selectors").on("click", function() {
           player1.choice = (this.id);
           if (player1.choice === rockPOne) {
@@ -101,43 +86,6 @@
           }
 
       });
-  //});
-
-/*
-var chatRef = database.ref().child("chatbox");  
-$("#send-chat").on("click", function() {
-    
-      database.ref().set({
-            chatbox: chatbox
-        });
-
-  
-
- 
-  
-    /*  if (e.keyCode == 13) {
-          if ($("name-goes-here").val() === "") {
-              //   $('#chatError').show();
-              console.log("error");
-              return
-          }
-
-          //   $('#chatError').hide(); 
-
-           }); 
-          var text = $().val();
-          chatRef.push({
-              name: player1.name,
-              text: text
-      });
-
-  chatRef.on("child_added", function(snapshot) {
-      var message = snapshot.val();
-      $("<div/>").text(message).prepend($("<p/>").text(name + ": " + message)).appendTo($("#chat-space"));
-  });
-  });
-*/
-      
 
 
 
